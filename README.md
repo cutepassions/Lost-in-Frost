@@ -64,11 +64,11 @@
 - Docker
 - Jenkins
 
-## 아키텍처
+## ⚙ 아키텍처
 
 <img src="WEB_IMG/아키텍처.png" />
 
-## ERD
+## 💶 ERD
 
 <img src="ERD.png" />
 
