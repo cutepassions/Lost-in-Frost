@@ -10,11 +10,7 @@ ARG JAR_FILE=/build/libs/notice-service-1.0.jar
 COPY ${JAR_FILE} /NoticeService.jar
 
 # PORT
-<<<<<<< HEAD
 # EXPOSE 9007
-=======
-#EXPOSE 9007
->>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
 # Set the entry point for the container to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod","/NoticeService.jar"]
