@@ -52,7 +52,11 @@ const useStateMessage = (): [
       const response = await axios.put(BASE_URL + END_POINTS.USER_MYPAGE_MESSAGE, stateMessage, {
         headers: {
           "Content-Type": "text/plain",
+<<<<<<< HEAD
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+=======
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
         },
       });
 

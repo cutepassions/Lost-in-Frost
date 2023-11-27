@@ -74,6 +74,7 @@
   font-style: normal;
   src: url("../font/Pretendard-Black.woff2") format("woff2");
 }
+<<<<<<< HEAD
 
 @font-face {
   font-family: Neo;
@@ -81,3 +82,5 @@
   font-style: normal;
   src: url("../font/NeoDunggeunmoPro-Regular.woff2") format("woff2");
 }
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626

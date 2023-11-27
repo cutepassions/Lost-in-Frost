@@ -10,7 +10,11 @@ import Pipeline from "@/component/atoms/common/Pipeline";
 import CustomInput from "@/component/atoms/input/CustomInput";
 import useInput from "@/hook/useInput";
 import userStore from "@/store/userStore";
+<<<<<<< HEAD
 import { logout } from "@/utils/user";
+=======
+import { logout } from "@/utils/logout";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
@@ -174,6 +178,7 @@ const MypageInfo = () => {
 
         <Controller>
           {!isUpdate && (
+<<<<<<< HEAD
             <CustomButton
               style="default"
               color="black"
@@ -209,6 +214,15 @@ const MypageInfo = () => {
               onClick={update}
             />
           )}
+=======
+            <CustomButton style="default" color="black" label="회원탈퇴" size="large" onClick={widthdrawal} />
+          )}
+          {!isUpdate && (
+            <CustomButton style="default" color="primary" label="수정" size="large" onClick={() => setIsUpdate(true)} />
+          )}
+          {isUpdate && <CustomButton style="default" color="black" label="취소" size="large" onClick={updateCancel} />}
+          {isUpdate && <CustomButton style="default" color="primary" label="완료" size="large" onClick={update} />}
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
         </Controller>
       </WrapperItem>
     </MypageInfoStyle>

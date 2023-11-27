@@ -179,7 +179,12 @@ namespace LostInFrost
             // 이전 상태 저장
             int temp = state;
             SetState(INS);
+<<<<<<< HEAD
             Directory.Delete(extractPath, true);
+=======
+                Directory.Delete(extractPath, true);
+                MessageBox.Show(extractPath);
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
             // 해당 경로의 모든 파일을 가져와서 삭제
             try

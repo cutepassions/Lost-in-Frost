@@ -15,7 +15,11 @@ const ModalGameStart = ({ onClickExit }: ModalGameStartProps) => {
   const [mode, setMode] = useState<"START" | "INSTALL">("START");
 
   useEffect(() => {
+<<<<<<< HEAD
     if (!localStorage.getItem("token")) {
+=======
+    if (!sessionStorage.getItem("token")) {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       alert("로그인이 필요합니다.");
       navigate("/user/login");
     } else {
@@ -28,7 +32,11 @@ const ModalGameStart = ({ onClickExit }: ModalGameStartProps) => {
       try {
         await axios
           .post("http://127.0.0.1:200", {
+<<<<<<< HEAD
             token: localStorage.getItem("token"),
+=======
+            token: sessionStorage.getItem("token"),
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
           })
           .then((response) => {
             if (response && response.data === "OK") {

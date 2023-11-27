@@ -30,38 +30,39 @@ import java.util.Arrays;
 @Slf4j
 public class WebSecurityConfigure {
 
-    private final JwtTokenProvider jwtTokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+        private final JwtTokenProvider jwtTokenProvider;
+        private final CustomUserDetailsService customUserDetailsService;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        log.debug("filterChain => ");
-        log.debug("   {}", http.toString());
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                log.debug("filterChain => ");
+                log.debug("   {}", http.toString());
 
-        // 기타 보안 설정
-        http
-                .csrf(AbstractHttpConfigurer::disable)
-                .formLogin(AbstractHttpConfigurer::disable)
-                .rememberMe(AbstractHttpConfigurer::disable)
-                .httpBasic(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                // 기타 보안 설정
+                http
+                                .csrf(AbstractHttpConfigurer::disable)
+                                .formLogin(AbstractHttpConfigurer::disable)
+                                .rememberMe(AbstractHttpConfigurer::disable)
+                                .httpBasic(AbstractHttpConfigurer::disable)
+                                .sessionManagement(session -> session
+                                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-        // 요청에 대한 권한 설정
-        http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(request -> request
-                        .getHeader("X-Gateway-token").equals("c101"))
-                .permitAll()
-                .anyRequest().denyAll());
+                // 요청에 대한 권한 설정
+                http.authorizeHttpRequests(auth -> auth
+                                .requestMatchers(request -> request
+                                                .getHeader("X-Gateway-token").equals("c101"))
+                                .permitAll()
+                                .anyRequest().denyAll());
 
-        // jwt filter 설정
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
-                UsernamePasswordAuthenticationFilter.class);
+                // jwt filter 설정
+                http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService),
+                                UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+                return http.build();
+        }
 }

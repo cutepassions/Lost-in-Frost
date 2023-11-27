@@ -10,7 +10,11 @@ ARG JAR_FILE=/build/libs/rank-service-1.0.jar
 COPY ${JAR_FILE} /RankService.jar
 
 # PORT
+<<<<<<< HEAD
 # EXPOSE 9003
+=======
+#EXPOSE 9003
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
 # Set the entry point for the container to run the Spring Boot application
 ENTRYPOINT ["java", "-jar", "-Dspring.profiles.active=prod","/RankService.jar"]

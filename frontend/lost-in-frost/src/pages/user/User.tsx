@@ -29,7 +29,11 @@ const UserStyle = styled.div`
 `;
 
 const Wrapper = styled.div`
+<<<<<<< HEAD
   margin-top: 100px;
+=======
+  margin-top: 30px;
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   display: flex;
   align-items: center;
   justify-content: center;

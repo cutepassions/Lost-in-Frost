@@ -2,6 +2,10 @@ import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import CustomInput from "@/component/atoms/input/CustomInput";
 import CustomButton from "@/component/atoms/button/CustomButton";
+<<<<<<< HEAD
+=======
+import MainLogo from "@/asset/logo/MainLogo.png";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 import { useNavigate } from "react-router-dom";
 import useJoin from "@/hook/useJoin";
 import userTempStore from "@/store/userTempStore";
@@ -50,7 +54,11 @@ const UserJoin = () => {
 
   return (
     <SignupContainer>
+<<<<<<< HEAD
       <NeoStyle onClick={() => navigate("/")}>Lost In Frost</NeoStyle>
+=======
+      <MainLogoStyle src={MainLogo} onClick={() => navigate("/")}></MainLogoStyle>
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       <ItemWrapper>
         <CustomInput
           disabled={false}
@@ -120,6 +128,7 @@ const SignupContainer = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 const NeoStyle = styled.div`
   width: 100%;
   display: flex;
@@ -129,6 +138,11 @@ const NeoStyle = styled.div`
   font-size: 50px;
   font-weight: 500;
   color: var(--primary-dark);
+=======
+const MainLogoStyle = styled.img`
+  width: 200px;
+  height: 200px;
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   cursor: pointer;
 `;
 

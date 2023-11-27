@@ -3,17 +3,25 @@ import React, { useEffect, useState } from "react";
 
 const useCommentWrite = (
   noticeSeq: number
+<<<<<<< HEAD
 ): [
   boolean,
   string,
   () => Promise<boolean>,
   (event: React.ChangeEvent<HTMLTextAreaElement>) => void
 ] => {
+=======
+): [boolean, string, () => Promise<boolean>, (event: React.ChangeEvent<HTMLTextAreaElement>) => void] => {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const [isLogin, setIsLogin] = useState(false);
   const [comment, setComment] = useState<string>("");
 
   useEffect(() => {
+<<<<<<< HEAD
     const token = localStorage.getItem("token");
+=======
+    const token = sessionStorage.getItem("token");
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
     console.log(token);
     if (token && token.length > 0) {
       setIsLogin(true);

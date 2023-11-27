@@ -25,6 +25,7 @@ import java.util.Arrays;
 @Slf4j
 public class WebSecurityConfigure {
 
+<<<<<<< HEAD
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
                 log.debug("filterChain => ");
@@ -48,4 +49,29 @@ public class WebSecurityConfigure {
 
                 return http.build();
         }
+=======
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        log.debug("filterChain => ");
+        log.debug("   {}", http.toString());
+
+        // 기타 보안 설정
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .rememberMe(AbstractHttpConfigurer::disable)
+                .httpBasic(AbstractHttpConfigurer::disable)
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+
+        //요청에 대한 권한 설정
+        http.authorizeHttpRequests(auth -> auth
+                .anyRequest().permitAll()
+        );
+
+
+        return http.build();
+    }
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 }

@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { getUserMyPageInfo } from "@/apis/apiUser";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import navigationStore from "@/store/navigationStore";
@@ -25,27 +29,42 @@ const userTab: TabItem[] = [
   { name: "Mypage", content: "마이페이지", link: "/mypage/info" },
 ];
 
+<<<<<<< HEAD
 const useNavigation = (): [
   any[],
   (event: React.MouseEvent<HTMLElement | SVGSVGElement>) => void
 ] => {
+=======
+const useNavigation = (): [any[], (event: React.MouseEvent<HTMLElement | SVGSVGElement>) => void] => {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const { currentTab, setCurrentTab } = navigationStore();
 
   const [tabList, setTabList] = useState<TabItem[]>(defaultTab);
   const navigate = useNavigate();
 
   useEffect(() => {
+<<<<<<< HEAD
     if (localStorage.getItem("token")) {
+=======
+    if (sessionStorage.getItem("token")) {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       setTabList(userTab);
     } else {
       setTabList(defaultTab);
     }
+<<<<<<< HEAD
   }, [localStorage.getItem("token")]);
+=======
+  }, [sessionStorage.getItem("token")]);
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
   const onClickHandler = (event: React.MouseEvent<HTMLElement | SVGSVGElement>) => {
     if (event) {
       const id = (event.target as Element).id;
+<<<<<<< HEAD
       console.log("id", id);
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       tabList.map((tab, index) => {
         if (tab.name === id) {
           setCurrentTab(tab.name);

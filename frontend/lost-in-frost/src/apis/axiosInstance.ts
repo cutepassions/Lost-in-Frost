@@ -6,6 +6,7 @@ https: const axiosInstance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
+<<<<<<< HEAD
 axiosInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("token");
@@ -59,4 +60,6 @@ axiosInstance.interceptors.response.use(
   }
 );
 
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 export default axiosInstance;

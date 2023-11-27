@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Route, Routes, useNavigate } from "react-router-dom";
+=======
+import { Route, Routes } from "react-router-dom";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 import Home from "@/pages/home/Home";
 import Notice from "@/pages/notice/Notice";
 import Ranking from "@/pages/ranking/Ranking";
@@ -13,6 +17,7 @@ import axiosInstance from "./apis/axiosInstance";
 import { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { useEffect, useState } from "react";
 import axiosStore from "./store/axiosStore";
+<<<<<<< HEAD
 import userStore from "./store/userStore";
 import { getUserMyPageInfo } from "./apis/apiUser";
 
@@ -138,6 +143,65 @@ const App = () => {
     };
 
     initComponent();
+=======
+
+const App = () => {
+  const { requestCnt, setRequestCnt, plusCnt, minusCnt } = axiosStore();
+
+  useEffect(() => {
+    axiosInstance.interceptors.request.use(
+      (config: InternalAxiosRequestConfig) => {
+        const token = sessionStorage.getItem("token");
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+
+        setTimeout(() => {
+          plusCnt();
+        }, 100);
+
+        return config;
+      },
+      (error: AxiosError) => {
+        minusCnt();
+
+        return Promise.reject(error);
+      }
+    );
+
+    axiosInstance.interceptors.response.use(
+      (response: AxiosResponse) => {
+        //const error = response.data.response.error;
+        minusCnt();
+
+        return response;
+      },
+      (error: AxiosError) => {
+        minusCnt();
+
+        if (error.response && error.response.status) {
+          switch (error.response.status) {
+            // case 400:
+            //   location.href = "/error";
+            //   return new Promise(() => {});
+            //case 401:
+            // location.href = "/user/logout";
+            //return new Promise(() => {});
+            // case 403:
+            //   location.href = "/error";
+            //   return new Promise(() => {});
+            // case 404:
+            //   location.href = "/error";
+            //   return new Promise(() => {});
+            default:
+              return Promise.reject(error);
+          }
+        }
+
+        return Promise.reject(error);
+      }
+    );
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   }, []);
 
   return (

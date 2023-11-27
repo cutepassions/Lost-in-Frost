@@ -12,6 +12,7 @@ import ModalShopCostume from "../shop/costume/modal/ModalShopCostume";
 import { useNavigate } from "react-router-dom";
 import userStore from "@/store/userStore";
 
+<<<<<<< HEAD
 const CostumeCard = ({
   type,
   costumeSeq,
@@ -22,6 +23,9 @@ const CostumeCard = ({
   coinPrice,
   crystalPrice,
 }: CostumeCardProps) => {
+=======
+const CostumeCard = ({ type, costumeSeq, grade, name, image, isHave, coinPrice, crystalPrice }: CostumeCardProps) => {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const { myCostumeSeq, setMyCostumeSeq, setCostumeName } = userStore();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [purchaseType, setPurchaseType] = useState<"COIN" | "CRYSTAL">("COIN");
@@ -56,7 +60,11 @@ const CostumeCard = ({
   };
 
   const purchaseOfCoin = () => {
+<<<<<<< HEAD
     if (localStorage.getItem("token") === null) {
+=======
+    if (sessionStorage.getItem("token") === null) {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       alert("로그인 후 이용해주세요");
       navigate("/user/login");
     } else {
@@ -66,7 +74,11 @@ const CostumeCard = ({
   };
 
   const purchaseOfCyristal = () => {
+<<<<<<< HEAD
     if (localStorage.getItem("token") === null) {
+=======
+    if (sessionStorage.getItem("token") === null) {
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       alert("로그인 후 이용해주세요");
       navigate("/user/login");
     } else {
@@ -96,6 +108,7 @@ const CostumeCard = ({
           <ContentText>{name}</ContentText>
         </ContentWrapper>
       </CardWrapper>
+<<<<<<< HEAD
       {coinPrice && (
         <PurchaseButton type="COIN" isHave={isHave} price={coinPrice} onClick={purchaseOfCoin} />
       )}
@@ -106,6 +119,11 @@ const CostumeCard = ({
           price={crystalPrice}
           onClick={purchaseOfCyristal}
         />
+=======
+      {coinPrice && <PurchaseButton type="COIN" isHave={isHave} price={coinPrice} onClick={purchaseOfCoin} />}
+      {crystalPrice && (
+        <PurchaseButton type="CRYSTAL" isHave={isHave} price={crystalPrice} onClick={purchaseOfCyristal} />
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
       )}
       {isModalOpen && !isHave && (
         <Modal title="코스튬 구매" onClickExit={exitModal}>
@@ -140,8 +158,12 @@ const CardWrapper = styled.div<{ $type?: string; $isHave?: boolean }>`
   height: 280px;
   border-radius: 10px;
   border: 2px solid;
+<<<<<<< HEAD
   border-color: ${(props) =>
     props.$isHave === true ? "var(--gray-dark)" : "var(--black-default)"};
+=======
+  border-color: ${(props) => (props.$isHave === true ? "var(--gray-dark)" : "var(--black-default)")};
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   overflow: hidden;
   display: flex;
   flex-direction: column;

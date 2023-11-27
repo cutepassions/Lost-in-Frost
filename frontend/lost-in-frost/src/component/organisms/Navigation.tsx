@@ -1,4 +1,8 @@
 import styled from "styled-components";
+<<<<<<< HEAD
+=======
+import MainLogo from "@/asset/logo/MainLogo.png";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 import { ReactComponent as LoginSVG } from "@/asset/icon/Login.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
@@ -47,6 +51,10 @@ const Navigation = () => {
   } = userStore();
 
   const { currentTab, setCurrentTab } = navigationStore();
+<<<<<<< HEAD
+=======
+
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const [tabList, onClickHandler] = useNavigation();
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const popupRef = useRef<any>(null);
@@ -60,7 +68,13 @@ const Navigation = () => {
 
     document.addEventListener("mousedown", handleOutsideClose);
     return () => document.removeEventListener("mousedown", handleOutsideClose);
+<<<<<<< HEAD
   }, [isPopupVisible, localStorage.getItem("token")]);
+=======
+  }, [isPopupVisible, sessionStorage.getItem("token")]);
+
+  const StartGame = () => {};
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
   const openModalHandler = () => {
     setIsModalOpen(!isModalOpen);
@@ -75,6 +89,7 @@ const Navigation = () => {
       <TabList>
         {tabList.map((tab, index) =>
           tab.name === "Home" ? (
+<<<<<<< HEAD
             <NeoStyle
               key={index}
               id={tab.name}
@@ -83,6 +98,11 @@ const Navigation = () => {
             >
               Lost In Frost
             </NeoStyle>
+=======
+            <Home key={index}>
+              <MainLogoStyle src={MainLogo} id={tab.name} onClick={onClickHandler}></MainLogoStyle>
+            </Home>
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
           ) : (
             <NavigationTab
               key={index}
@@ -136,6 +156,7 @@ const HeaderStyle = styled.div<{ height?: string }>`
   background-color: var(--black-default);
 `;
 
+<<<<<<< HEAD
 const NeoStyle = styled.div<{ $isActive: boolean }>`
   width: 250px;
   display: flex;
@@ -148,12 +169,37 @@ const NeoStyle = styled.div<{ $isActive: boolean }>`
   cursor: pointer;
 `;
 
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 const TabList = styled.div`
   display: flex;
   flex-direction: row;
   align-items: stretch;
 `;
 
+<<<<<<< HEAD
+=======
+const Home = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 30px 0px 30px;
+`;
+
+const MainLogoStyle = styled.img`
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  > * {
+    pointer-events: none;
+  }
+`;
+
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 const Controller = styled.div`
   display: flex;
   flex-direction: row;

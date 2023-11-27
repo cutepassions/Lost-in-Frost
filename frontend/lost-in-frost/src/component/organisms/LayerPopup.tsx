@@ -6,7 +6,11 @@ import { BASE_URL } from "@/constant/api";
 import CoinImage from "@/asset/icon/Coin.png";
 import CrystalImage from "@/asset/icon/Crystal.png";
 import userStore from "@/store/userStore";
+<<<<<<< HEAD
 import { logout } from "@/utils/user";
+=======
+import { logout } from "@/utils/logout";
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
 interface LayerPopupProps {
   isVisible: boolean;

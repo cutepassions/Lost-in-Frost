@@ -11,7 +11,12 @@ import { getUserMyPageAmount } from "@/apis/apiUser";
 const PaymentState = () => {
   const [coin, setCoin] = useState("0");
   const [crystal, setCrystal] = useState("0");
+<<<<<<< HEAD
   const [isOpen, setIsOpen] = useState(false);
+=======
+
+  const navigate = useNavigate();
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
   useEffect(() => {
     const initComponent = async () => {
@@ -26,6 +31,11 @@ const PaymentState = () => {
     initComponent();
   }, []);
 
+<<<<<<< HEAD
+=======
+  const [isOpen, setIsOpen] = useState(false);
+
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const openModalHandler = () => {
     setIsOpen(!isOpen);
   };
@@ -43,6 +53,7 @@ const PaymentState = () => {
       <Line>
         <img src={CrystalImage} width={40} height={40} />
         <Text>보유 크리스탈 {crystal.toLocaleString()}개</Text>
+<<<<<<< HEAD
         <CustomButton
           onClick={openModalHandler}
           style="default"
@@ -50,6 +61,9 @@ const PaymentState = () => {
           label="충전하기"
           size="large"
         />
+=======
+        <CustomButton onClick={openModalHandler} style="default" color="secondary" label="충전하기" size="large" />
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
         {isOpen ? (
           <Modal onClickExit={exitModal} title="크리스탈 상점">
             <ModalPayment />

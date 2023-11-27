@@ -128,26 +128,3 @@ public lass
      * Config 클래스
      */
     publi statc class Config {
-
-    
-    
-        
-        
-    
-    
-    
-        
-        
-    
-    
-    
-        
-        
-    
-    
-    
-        
-        
-    
-
-    

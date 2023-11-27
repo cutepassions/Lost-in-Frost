@@ -11,7 +11,10 @@ import MypageCostume from "./MypageCostume";
 import MypageInfo from "./MypageInfo";
 import Footer from "@/component/organisms/Footer";
 import useMypagePannel from "@/hook/useMypagePannel";
+<<<<<<< HEAD
 import TossSuccess from "./TossSuccess";
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
 const Mypage = () => {
   const [tabList, currentTab, onclickHandler] = useMypagePannel();
@@ -28,7 +31,10 @@ const Mypage = () => {
             <Route path="info" element={<MypageInfo />} />
             <Route path="costume" element={<MypageCostume />} />
             <Route path="payment" element={<MypagePayment />} />
+<<<<<<< HEAD
             <Route path="toss-success" element={<TossSuccess />} />
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
           </Routes>
         </MypagePannel>
       </Body>

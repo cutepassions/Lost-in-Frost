@@ -5,7 +5,10 @@ import useEmailCode from "@/hook/useEmailCode";
 import userTempStore from "@/store/userTempStore";
 import { postMailVerify } from "@/apis/apiMail";
 import { postUserAuthJoin } from "@/apis/apiUser";
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 
 const UserEmailCode = () => {
   const navigate = useNavigate();
@@ -20,8 +23,11 @@ const UserEmailCode = () => {
     reset,
   } = userTempStore();
 
+<<<<<<< HEAD
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   const onClickButton = async () => {
     let numbers = "";
     for (const [key, value] of Object.entries(values)) {
@@ -41,8 +47,11 @@ const UserEmailCode = () => {
       });
 
       if (verifyRes.data.success) {
+<<<<<<< HEAD
         setIsButtonDisabled(false);
 
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
         const joinRes = await postUserAuthJoin({
           email: userTempEmail,
           password: userTempPassword,
@@ -150,7 +159,11 @@ const UserEmailCode = () => {
         ></CustomButton>
 
         <CustomButton
+<<<<<<< HEAD
           style={isButtonDisabled ? "disable" : "default"}
+=======
+          style="default"
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
           color="primary"
           label="확인"
           size="medium"

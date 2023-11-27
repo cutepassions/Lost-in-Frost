@@ -3,10 +3,14 @@ import { BASE_URL } from "@/constant/api";
 
 const axiosFileInstance = axios.create({
   baseURL: BASE_URL,
+<<<<<<< HEAD
   headers: {
     "Content-type":
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8",
   },
+=======
+  headers: { "Content-type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; charset=UTF-8" },
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
 });
 
 /*
@@ -14,7 +18,11 @@ const axiosFileInstance = axios.create({
  */
 axiosFileInstance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+<<<<<<< HEAD
     const token = localStorage.getItem("token");
+=======
+    const token = sessionStorage.getItem("token");
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

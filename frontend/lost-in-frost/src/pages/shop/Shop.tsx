@@ -19,7 +19,11 @@ const Shop = () => {
       <HeaderImage height={200} />
       <Body width={1200} topHeight={280}>
         <PageTitle text="상점" />
+<<<<<<< HEAD
         {localStorage.getItem("token") && <PaymentState />}
+=======
+        {sessionStorage.getItem("token") && <PaymentState />}
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
         <ShopPannel tabList={tabList} currentTab={currentTab} onClickHandler={onclickHandler}>
           <Routes>
             <Route path="costume" element={<ShopCostume />} />

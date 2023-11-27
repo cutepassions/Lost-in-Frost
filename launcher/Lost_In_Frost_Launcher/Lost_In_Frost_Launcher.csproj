@@ -72,9 +72,12 @@
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
   </PropertyGroup>
+<<<<<<< HEAD
   <PropertyGroup>
     <ApplicationIcon>free-icon-download-7721607.ico</ApplicationIcon>
   </PropertyGroup>
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
   <ItemGroup>
     <Reference Include="Costura, Version=5.7.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Costura.Fody.5.7.0\lib\netstandard1.0\Costura.dll</HintPath>
@@ -286,7 +289,10 @@
     <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <Content Include="free-icon-download-7721607.ico" />
+=======
+>>>>>>> 54f0d187adfeb0db8f914fde189a7abd8635d626
     <Content Include="MetroFramework.txt" />
   </ItemGroup>
   <ItemGroup>
