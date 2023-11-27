@@ -9,12 +9,51 @@
 ## 🎮 서비스 소개
 
 - 평범한 생존게임은 가라! 다양한 상호작용과 랜덤 카드 선택을 통한 효과를 챙겨 30분을 버텨라!
-- [게임 README](https://github.com/cutepassions/Lost-in-Frost/blob/351539809cfbd53b3a7a3395308d1746046fd734/GAME.md)
+- [게임 관련 README](https://github.com/cutepassions/Lost-in-Frost/blob/351539809cfbd53b3a7a3395308d1746046fd734/GAME.md)
 
-## 팀원 소개
+## 🙍🏻‍♂️ 팀원 소개
 
-- 김범창 (FE)
-- 진병욱 (BE, CI/CD)
+<div align="center">
+
+### 프론트엔드
+
+<table align="center">
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="https://github.com/imbeom35">
+              <img src="https://avatars.githubusercontent.com/u/97426151?v=4" width="200">
+              <br />
+              <b>김범창</b>
+            </a>
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+          김범창 [FE, 게임 런처]
+        </td>
+    </tr>
+</table>
+
+### 백엔드
+
+<table align="center">
+    <tr align="center">
+        <td style="min-width: 150px;">
+            <a href="https://github.com/cutepassions">
+              <img src="https://avatars.githubusercontent.com/u/105566077?v=4" width="200">
+              <br />
+              <b>진병욱</b>
+            </a>
+        </td>
+    </tr>
+    <tr align="center">
+        <td>
+          진병욱 [BE, CI/CD]
+        </td>
+    </tr>
+</table>
+
+</div>
 
 ## 📆 개발 기간
 
