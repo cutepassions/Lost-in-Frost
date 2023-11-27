@@ -79,9 +79,8 @@
 - Docker
 - Jenkins
 
-### API 문서
+### API 문서 (Swagger)
 
-- Swagger
   <img src="WEB_IMG/swagger.png" />
 
 ## 📜 사용 기술 및 라이브러리
