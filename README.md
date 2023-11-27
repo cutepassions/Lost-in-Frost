@@ -9,6 +9,7 @@
 ## 🎮 서비스 소개
 
 - 평범한 생존게임은 가라! 다양한 상호작용과 랜덤 카드 선택을 통한 효과를 챙겨 30분을 버텨라!
+- [게임 README](https://github.com/cutepassions/Lost-in-Frost/blob/351539809cfbd53b3a7a3395308d1746046fd734/GAME.md)
 
 ## 팀원 소개
 
