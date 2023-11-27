@@ -76,8 +76,8 @@
 
 ### CI/CD
 
-- Xshell
-- nano
+- Docker
+- Jenkins
 
 ### API 문서
 
