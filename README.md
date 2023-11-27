@@ -61,47 +61,66 @@
 
 ## 💻 사용 서버
 
-- AWS Lightsail ($80)
+<img src="https://img.shields.io/badge/awsligntsail
+-FF9900?style=flat&logo=amazonec2
+&logoColor=white" />
 
 ## 💽 개발 환경
 
 ### Frontend
 
-- React
+<img src="https://img.shields.io/badge/React
+-61DAFB?style=flat&logo=React
+&logoColor=white" />
 
 ### Backend
 
-- Spring Boot
-- Spring Cloud
+<img src="https://img.shields.io/badge/springboot-6DB33F?style=flat&logo=springboot&logoColor=white" />
+<img src="https://img.shields.io/badge/springCloud-6DB33F?style=flat&logo=spring&logoColor=white" />
 
 ### CI/CD
 
-- Docker
-- Jenkins
+<img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white" />
+<img src="https://img.shields.io/badge/jenkins-D24939?style=flat&logo=jenkins&logoColor=white" />
 
 ### API 문서 (Swagger)
 
-  <img src="WEB_IMG/swagger.png" />
+<img src="https://img.shields.io/badge/swagger-85EA2D?style=flat&logo=swagger&logoColor=white" />
 
 ## 📜 사용 기술 및 라이브러리
 
 ### Frontend
 
-- WebPack, Axios, Justand
+<img src="https://img.shields.io/badge/webpack-8DD6F9?style=flat&logo=webpack&logoColor=black" />
+<img src="https://img.shields.io/badge/axios-5A29E4?style=flat&logo=axios&logoColor=white" />
+<img src="https://img.shields.io/badge/zustand-black?style=flat&logo=zustand&logoColor=white" />
 
 ### Backend
 
-- JAVA
-- SpringBoot, SprinSecurity, JWT
-- OAuth2 (GOOGLE, NAVER, KAKAO), TossAPI
-- Spring Cloud, RabbitMQ, Prometheus, Grafana
-- Mysql, Redis
+  <img src="https://img.shields.io/badge/openjdk [17] -437291?style=flat&logo=openjdk&logoColor=white" />  
+  
+  <img src="https://img.shields.io/badge/springboot [3.1.5]-6DB33F?style=flat&logo=springboot&logoColor=white" />
+  <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white" />
+  <img src="https://img.shields.io/badge/jsonwebtokens-000000?style=flat&logo=jsonwebtokens&logoColor=white" />
+
+  <img src="https://img.shields.io/badge/springcloud-6DB33F?style=flat&logo=spring&logoColor=white" />
+  <img src="https://img.shields.io/badge/rabbitmq-FF6600?style=flat&logo=rabbitmq&logoColor=white" />
+  <img src="https://img.shields.io/badge/prometheus-E6522C?style=flat&logo=prometheus&logoColor=white" />
+  <img src="https://img.shields.io/badge/grafana-F46800?style=flat&logo=grafana&logoColor=white" />
+
+  <img src="https://img.shields.io/badge/google-4285F4?style=flat&logo=google&logoColor=white" />
+  <img src="https://img.shields.io/badge/naver-03C75A?style=flat&logo=naver&logoColor=white" />
+  <img src="https://img.shields.io/badge/kakao-FFCD00?style=flat&logo=kakao&logoColor=black" />
+  <img src="https://img.shields.io/badge/toss-0064FF?style=flat&logo=toss&logoColor=white" />
+
+  <img src="https://img.shields.io/badge/mysql-4479A1?style=flat&logo=mysql&logoColor=white" />
+  <img src="https://img.shields.io/badge/redis-DC382D?style=flat&logo=redis&logoColor=white" />
 
 ### CI/CD
 
-- Nginx
-- Docker
-- Jenkins
+  <img src="https://img.shields.io/badge/nginx-009639?style=flat&logo=nginx&logoColor=white" />
+  <img src="https://img.shields.io/badge/docker-2496ED?style=flat&logo=docker&logoColor=white" />
+  <img src="https://img.shields.io/badge/jenkins-D24939?style=flat&logo=jenkins&logoColor=white" />
 
 ## ⚙ 아키텍처
 
