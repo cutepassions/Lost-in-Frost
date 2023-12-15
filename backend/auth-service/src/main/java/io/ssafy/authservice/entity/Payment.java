@@ -44,7 +44,7 @@ public class Payment {
     @Comment("결제 성공 여부")
     private Boolean paySuccessStatus;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id", referencedColumnName = "member_id")
     @Comment("손님 식별자")
     private Member customer;
