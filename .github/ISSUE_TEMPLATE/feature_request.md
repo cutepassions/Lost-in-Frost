@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: 기능 개발에 대한 이슈 작성
-title: "[Feature]"
+title: "✔ FEATURE"
 labels: enhancement
 assignees: cutepassions
 
