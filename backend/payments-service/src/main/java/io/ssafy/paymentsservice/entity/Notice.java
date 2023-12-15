@@ -1,6 +1,8 @@
 package io.ssafy.paymentsservice.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +16,9 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @SuperBuilder
 @DynamicInsert
+@Table(indexes = {
+        @Index(name = "idx_notice_is_deleted", columnList = "notice_is_deleted")
+})
 public class Notice{
 
     @Id
@@ -22,7 +27,7 @@ public class Notice{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @Comment("회원 식별자")
     private Member member;
