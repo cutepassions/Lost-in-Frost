@@ -2,6 +2,8 @@ package io.ssafy.noticeservice.notice.entity;
 
 import io.ssafy.noticeservice.entity.Member;
 import jakarta.persistence.*;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,12 +25,12 @@ public class NoticeComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long seq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @Comment("회원 식별자")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "notice_seq")
     @Comment("공지사항 식별자")
     private Notice notice;

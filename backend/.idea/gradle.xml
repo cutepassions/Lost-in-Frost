@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/api-gateway-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/api-gateway-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/auth-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/auth-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/config-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/config-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/eureka-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/eureka-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/game-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/game-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/mail-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/mail-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/notice-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/notice-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/payments-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/payments-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/rank-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/rank-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service" />
+        <option name="gradleJvm" value="18 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

@@ -23,7 +23,7 @@ public class PurchaseHistory {
     @Comment("구매 내역 식별자")
     private Long seq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @Comment("회원 식별자")
     private Member member;

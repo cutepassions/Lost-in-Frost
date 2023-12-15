@@ -5,6 +5,8 @@ import io.ssafy.userservice.oauth2.enums.Role;
 import io.ssafy.userservice.oauth2.userinfo.OAuth2UserInfo;
 import io.ssafy.userservice.user.mycostume.entity.MyCostume;
 import jakarta.persistence.*;
+import jakarta.persistence.Index;
+import jakarta.persistence.Table;
 import lombok.*;
 import org.hibernate.annotations.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,6 +22,12 @@ import java.util.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_member_email", columnList = "member_email"),
+        @Index(name = "idx_member_nickname", columnList = "member_nickname"),
+        @Index(name = "idx_member_role", columnList = "member_role"),
+        @Index(name = "idx_member_is_deleted", columnList = "member_is_deleted")
+})
 public class Member implements UserDetails {
 
     @Id
@@ -71,7 +79,7 @@ public class Member implements UserDetails {
     private String message;
 
     @JoinColumn(name = "my_costume_seq", referencedColumnName = "my_costume_seq")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @Comment("회원이 현재 장착한 코스튬")
     private MyCostume myCostume;
 

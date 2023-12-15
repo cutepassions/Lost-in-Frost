@@ -12,6 +12,9 @@ import org.hibernate.annotations.Comment;
 @Getter
 @NoArgsConstructor
 @SuperBuilder
+@Table(indexes = {
+        @Index(name = "idx_costume_grade", columnList = "costume_grade")
+})
 public class Costume {
 
     @Id
