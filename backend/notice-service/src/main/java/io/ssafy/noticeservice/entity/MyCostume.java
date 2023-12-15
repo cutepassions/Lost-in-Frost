@@ -19,12 +19,12 @@ public class MyCostume {
     @Comment("내 코스튬 식별자")
     private Long seq;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     @Comment("회원 식별자")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "purchase_history_seq")
     @Comment("결제 내역 식별자")
     private PurchaseHistory purchaseHistorySeq;
