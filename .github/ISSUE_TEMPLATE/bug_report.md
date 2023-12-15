@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: 발생한 버그에 대한 이슈 작성
-title: "❗ BUG"
+title: "❗ BUG:"
 labels: bug
 assignees: cutepassions
 
