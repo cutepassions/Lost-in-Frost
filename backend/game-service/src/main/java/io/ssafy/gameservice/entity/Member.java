@@ -24,6 +24,11 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_member_email", columnList = "member_email"),
+        @Index(name = "idx_member_nickname", columnList = "member_nickname"),
+        @Index(name = "idx_member_role", columnList = "member_role")
+})
 public class Member implements UserDetails {
 
     @Id
@@ -75,7 +80,7 @@ public class Member implements UserDetails {
     private String message;
 
     @JoinColumn(name = "my_costume_seq", referencedColumnName = "my_costume_seq")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @Comment("회원이 현재 장착한 코스튬")
     private MyCostume myCostume;
 

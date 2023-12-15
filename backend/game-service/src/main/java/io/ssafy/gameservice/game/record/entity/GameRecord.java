@@ -17,6 +17,9 @@ import java.util.Set;
 @NoArgsConstructor
 @SuperBuilder
 @Entity
+@Table(indexes = {
+        @Index(name = "idx_game_record_room_id", columnList = "game_record_room_id")
+})
 public class GameRecord {
 
     @Id
@@ -30,7 +33,7 @@ public class GameRecord {
     private String roomId;
 
     @Comment("회원 식별자")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

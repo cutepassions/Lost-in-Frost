@@ -12,6 +12,11 @@ import org.hibernate.annotations.Comment;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Table(indexes = {
+        @Index(name = "idx_game_file_type", columnList = "game_file_type"),
+        @Index(name = "idx_game_file_use_state", columnList = "game_file_use_state"),
+        @Index(name = "idx_game_file_hash", columnList = "game_file_hash")
+})
 public class GameFile {
 
     @Id
