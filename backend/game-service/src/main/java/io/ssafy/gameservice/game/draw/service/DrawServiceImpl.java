@@ -16,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
 
 import static io.ssafy.gameservice.response.Response.ERROR;
 import static io.ssafy.gameservice.response.Response.OK;
@@ -86,9 +88,12 @@ public class DrawServiceImpl implements DrawService{
 
     @Override
     public String getDrawResult() {
-        double randomNumber = Math.random();
-        double cumulativeProbability = 0.0;
+        RandomGeneratorFactory<RandomGenerator> factory = RandomGeneratorFactory.of("SecureRandom");
+        RandomGenerator randomGenerator = factory.create();
+
+        double randomNumber = randomGenerator.nextDouble(0.1,1.0);
         double[] probabilities = {0.7, 0.18, 0.1, 0.02};
+        double cumulativeProbability = 0.0;
 
         int selectedValue = -1;
 
