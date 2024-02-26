@@ -16,6 +16,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.random.RandomGenerator;
+import java.util.random.RandomGeneratorFactory;
+
 import static io.ssafy.mailservice.response.Response.ERROR;
 import static io.ssafy.mailservice.response.Response.OK;
 
@@ -84,7 +87,9 @@ public class MailServiceImpl implements MailService{
 
 
     private int createNumber(){
-        return (int)(Math.random() * (90000)) + 100000;// (int) Math.random() * (최댓값-최소값+1) + 최소값
+        RandomGeneratorFactory<RandomGenerator> factory = RandomGeneratorFactory.of("SHA2");
+        RandomGenerator random = factory.create();
+        return random.nextInt(100000, 999999); // 6자리 난수 생성
     }
 
     private MimeMessage createMessage(String email, int code) {
