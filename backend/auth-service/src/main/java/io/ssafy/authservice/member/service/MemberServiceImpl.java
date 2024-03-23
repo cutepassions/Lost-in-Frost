@@ -6,14 +6,20 @@ import io.ssafy.authservice.entity.MailRedis;
 import io.ssafy.authservice.entity.MyCostume;
 import io.ssafy.authservice.global.response.Response;
 import io.ssafy.authservice.member.entity.Member;
+import io.ssafy.authservice.member.entity.TokenRedis;
 import io.ssafy.authservice.member.respository.MemberRepository;
+import io.ssafy.authservice.member.respository.TokenRedisRepository;
+import io.ssafy.authservice.oauth2.cookie.CookieUtils;
 import io.ssafy.authservice.oauth2.dto.UserResponseDto;
 import io.ssafy.authservice.oauth2.enums.Role;
 import io.ssafy.authservice.oauth2.jwt.JwtTokenProvider;
 import io.ssafy.authservice.repository.MailRedisRepository;
 import io.ssafy.authservice.repository.MyCostumeRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,7 +35,6 @@ import static io.ssafy.authservice.global.response.Response.ERROR;
 import static io.ssafy.authservice.global.response.Response.OK;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 @Slf4j
 public class MemberServiceImpl implements MemberService {
@@ -40,6 +45,12 @@ public class MemberServiceImpl implements MemberService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MyCostumeRepository myCostumeRepository;
     private final MailRedisRepository mailRedisRepository;
+    private final TokenRedisRepository tokenRedisRepository;
+
+    @Value("${cookie.domain}")
+    private static String cookieResponseDomain;
+    @Value("${cookie.max-age}")
+    private int cookieMaxAge;
 
     @Override
     public Response<?> joinMember(MemberJoinReqDto memberJoinReqDto) {
@@ -100,8 +111,9 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+    @Transactional
     @Override
-    public Response<?> loginMember(MemberLoginReqDto memberLoginReqDto) {
+    public Response<?> loginMember(MemberLoginReqDto memberLoginReqDto, HttpServletResponse response) {
 
         Member member = memberRepository
                 .findByEmailAndAuthProviderAndIsDeleted(memberLoginReqDto.getEmail(), null, false).orElse(null);
@@ -115,7 +127,14 @@ public class MemberServiceImpl implements MemberService {
                     memberLoginReqDto.getPassword());
             Authentication authentication = authenticationManagerBuilder.getObject().authenticate(token);
             UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
-            return OK(tokenInfo.getAccessToken());
+
+            // 쿠키 생성 및 저장
+            saveCookie(response, tokenInfo.getAccessToken());
+
+            // redis에 토큰 저장
+            tokenRedisRepository.save(new TokenRedis(authentication.getName(), tokenInfo.getAccessToken(), tokenInfo.getRefreshToken()));
+
+            return OK(null);
         } else {
             return ERROR("존재하지 않는 회원입니다.", HttpStatus.NOT_FOUND);
         }
@@ -145,5 +164,15 @@ public class MemberServiceImpl implements MemberService {
             return ERROR("이미 사용중인 이메일입니다.", HttpStatus.BAD_REQUEST);
         }
     }
+
+    private void saveCookie(HttpServletResponse response, String AccessToken) {
+        Cookie cookie = new Cookie("accessToken", AccessToken);
+        cookie.setPath("/");
+        cookie.setDomain(cookieResponseDomain); // 특정 도메인에서 사용하도록
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(cookieMaxAge);
+        response.addCookie(cookie);
+    }
+
 
 }

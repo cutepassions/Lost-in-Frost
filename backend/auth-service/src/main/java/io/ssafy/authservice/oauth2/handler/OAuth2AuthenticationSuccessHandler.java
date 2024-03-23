@@ -1,5 +1,7 @@
 package io.ssafy.authservice.oauth2.handler;
 
+import io.ssafy.authservice.member.entity.TokenRedis;
+import io.ssafy.authservice.member.respository.TokenRedisRepository;
 import io.ssafy.authservice.oauth2.cookie.CookieAuthorizationRequestRepository;
 import io.ssafy.authservice.oauth2.cookie.CookieUtils;
 import io.ssafy.authservice.oauth2.dto.UserResponseDto;
@@ -28,6 +30,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private String redirectUri;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
+    private final TokenRedisRepository tokenRedisRepository;
 
 
     @Override
@@ -61,10 +64,19 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         // JWT 생성
         UserResponseDto.TokenInfo tokenInfo = jwtTokenProvider.generateToken(authentication);
 
-        // AccessToken return
+        // 쿠키 생성 및 저장
+        Cookie cookie = new Cookie("accessToken", tokenInfo.getAccessToken());
+        cookie.setPath("/");
+        cookie.setDomain(String.valueOf(redirectUri)); // 특정 도메인에서 사용하도록
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(60 * 30);
+        response.addCookie(cookie);
+
+        // redis에 토큰 저장
+        tokenRedisRepository.save(new TokenRedis(authentication.getName(), tokenInfo.getAccessToken(), tokenInfo.getRefreshToken()));
+
         return UriComponentsBuilder.
                 fromUriString(targetUrl)
-                .queryParam("token", tokenInfo.getAccessToken())
                 .build().toUriString();
     }
 
