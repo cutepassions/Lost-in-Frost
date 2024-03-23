@@ -3,6 +3,9 @@ package io.ssafy.authservice.oauth2.cookie;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.util.SerializationUtils;
 
 import java.util.Arrays;
@@ -10,6 +13,14 @@ import java.util.Base64;
 import java.util.Optional;
 
 public class CookieUtils {
+
+
+    @Value("${cookie.domain}")
+    private static String cookieResponseDomain;
+
+    @Value("${cookie.max-age}")
+    private static int cookieMaxAge;
+
 
     public static Optional<Cookie> getCookie(HttpServletRequest request, String name) {
         Cookie[] cookies = request.getCookies();
@@ -36,6 +47,16 @@ public class CookieUtils {
         cookie.setHttpOnly(true);
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
+    }
+
+    public static Cookie setAccessTokenCookie(String accessToken) {
+        Cookie cookie = new Cookie("accessToken", accessToken);
+        cookie.setPath("/");
+        cookie.setDomain(cookieResponseDomain); // 특정 도메인에서 사용하도록
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(cookieMaxAge);
+
+        return cookie;
     }
 
     public static void deleteCookie(HttpServletRequest request, HttpServletResponse response, String name) {

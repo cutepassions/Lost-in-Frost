@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -58,9 +59,9 @@ public class AuthController {
             @ApiResponse(responseCode = "404", description = "존재하지 않는 회원입니다.")
     })
     @PostMapping("/login")
-    public Response<?> loginMember (@RequestBody MemberLoginReqDto memberLoginReqDto) {
+    public Response<?> loginMember (@RequestBody MemberLoginReqDto memberLoginReqDto, HttpServletResponse response) {
         log.debug("## 로그인을 시도합니다! : {}", memberLoginReqDto);
-        return memberService.loginMember(memberLoginReqDto);
+        return memberService.loginMember(memberLoginReqDto, response);
     }
 
 
@@ -103,6 +104,12 @@ public class AuthController {
     public Response<?> validateEmail (@PathVariable String email) {
         log.debug("## 이메일 중복 검사 : {}", email);
         return memberService.validateEmail(email);
+    }
+
+    @GetMapping("/test")
+    public Response<?> testForToken(@AuthenticationPrincipal User user) {
+        log.debug("## 토큰 테스트 : {}", user);
+        return OK(null);
     }
 
 }
