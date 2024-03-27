@@ -20,7 +20,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.antlr.v4.runtime.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.PartialUpdate;
+import org.springframework.data.redis.core.RedisKeyValueTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -28,7 +31,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
@@ -36,6 +41,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -50,21 +56,17 @@ public class JwtTokenProvider {
     @Value("${cookie.domain}")
     private static String cookieResponseDomain;
 
-    private final RedisTemplate<String, TokenRedis> redisTemplate;
-    
     @Value("${cookie.max-age}")
     private int cookieMaxAge;
 
     private final TokenRedisRepository tokenRedisRepository;
-    private final CustomUserDetailsService customUserDetailsService;
-
+    private final RedisKeyValueTemplate redisKeyValueTemplate;
     private final Key key;
 
 
-    public JwtTokenProvider(@Value("${token.secret}") String secretKey, RedisTemplate<String, TokenRedis> redisTemplate, TokenRedisRepository tokenRedisRepository, CustomUserDetailsService customUserDetailsService) {
-        this.redisTemplate = redisTemplate;
+    public JwtTokenProvider(@Value("${token.secret}") String secretKey, TokenRedisRepository tokenRedisRepository, RedisKeyValueTemplate redisKeyValueTemplate) {
         this.tokenRedisRepository = tokenRedisRepository;
-        this.customUserDetailsService = customUserDetailsService;
+        this.redisKeyValueTemplate = redisKeyValueTemplate;
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
@@ -95,6 +97,7 @@ public class JwtTokenProvider {
         String refreshToken = Jwts.builder()
                 .claim(AUTHORITIES_KEY, authorities)
                 .claim("type", TYPE_REFRESH)
+                .setSubject(name)
                 .setIssuedAt(now) // 토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + ExpireTime.REFRESH_TOKEN__EXPIRE_TIME)) // 토큰 만료 시간 설정
                 .signWith(key, SignatureAlgorithm.HS256)
@@ -119,14 +122,6 @@ public class JwtTokenProvider {
         // 토큰 복호화
         Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
 
-        String subject;
-
-        if (claims.get("type").equals("refresh")) {
-            subject = memberId;
-        } else {
-            subject = claims.getSubject();
-        }
-
         if (claims.get(AUTHORITIES_KEY) == null) {
             throw new RuntimeException("권한 정보가 없는 토큰입니다.");
         }
@@ -137,7 +132,7 @@ public class JwtTokenProvider {
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
 
-        UserDetails principal = new User(subject, "", authorities);
+        UserDetails principal = new User(memberId, "", authorities);
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
@@ -147,32 +142,25 @@ public class JwtTokenProvider {
      * @param response 응답
      * @return 유효성 여부
      */
-    public boolean validateToken(String token, HttpServletResponse response) throws IOException {
+    public String validateToken(String token, HttpServletResponse response) throws IOException {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
         } catch (SecurityException | MalformedJwtException e) {
             log.error("Invalid JWT Token", e);
-            response.sendRedirect("/error");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT Token");
         } catch (ExpiredJwtException e) {
             log.error("만료된 액세스 토큰 사용!!", e);
-            return false;
+            return null;
         } catch (UnsupportedJwtException e) {
             log.error("Unsupported JWT Token", e);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unsupported JWT Token");
         } catch (IllegalArgumentException e) {
             log.error("JWT claims string is empty.", e);
-        }
-        return false;
-    }
-
-
-    public String resolveToken(HttpServletRequest request) {
-        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(BEARER_TYPE)) {
-            return bearerToken.substring(7);
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "JWT claims string is empty.");
         }
         return null;
     }
+
 
     /**
      * AccessToken 생성 메소드
@@ -208,7 +196,7 @@ public class JwtTokenProvider {
     public UsernamePasswordAuthenticationToken createAuthenticationFromToken(String token, String memberId) throws TokenNotFoundException{
 
         Authentication authentication = getAuthentication(token, memberId);
-        UserDetails userDetails = customUserDetailsService.loadUserByUsername(authentication.getName());
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
     }
@@ -226,33 +214,39 @@ public class JwtTokenProvider {
         try{
             // redis 엔티티 조회
             TokenRedis tokenRedis = tokenRedisRepository.findByAccessToken(token).orElseThrow(() -> new TokenNotFoundException("다시 로그인 해 주세요."));
-            String refreshToken = tokenRedis.getRefreshToken();
-
-            // 리프레시 토큰 유효성 검사
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(refreshToken);
+            if (tokenRedis == null) {
+                throw new TokenNotFoundException("다시 로그인 해 주세요.");
+            }
+            String refreshToken = Objects.requireNonNull(tokenRedis).getRefreshToken();
+            // 리프레시 토큰 유효성 검사 및 subject 추출
+            Claims jwt = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(refreshToken).getBody();
+            String memberId = jwt.getSubject();
 
             log.error("## 토큰 재발급 시작..");
-
-            String memberId = tokenRedis.getId();
 
             // authentication 생성
             UsernamePasswordAuthenticationToken authentication = createAuthenticationFromToken(refreshToken,memberId);
             // 새로운 액세스 토큰 발급
-            String newAccessToken = generateAccessToken(tokenRedis.getId(), authentication.getAuthorities());
+            String newAccessToken = generateAccessToken(memberId, authentication.getAuthorities());
+
 
             // 쿠키 AccessToken 업데이트
             saveCookie(response, newAccessToken);
 
             // redis AccessToken 업데이트
-            tokenRedis.updateAccessToken(newAccessToken);
-            tokenRedisRepository.save(tokenRedis);
+            PartialUpdate<TokenRedis> update = new PartialUpdate<>(memberId, TokenRedis.class)
+                    .set("accessToken", newAccessToken);
+            redisKeyValueTemplate.update(update);
+
             log.error("## 토큰 재발급 완료!");
 
             return authentication;
 
-        } catch (ExpiredJwtException | TokenNotFoundException exception) { // 이미 재 발급된 토큰 사용 or  리프레시 토큰 만료
+        }
+        // 이미 재 발급된 토큰 사용 or  리프레시 토큰 만료
+        catch (ExpiredJwtException | TokenNotFoundException exception) {
             log.error(exception.getMessage());
-            response.sendRedirect("/error");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "사용 불가능한 토큰입니다. 다시 로그인 후 이용해주세요.");
         } catch (RedisException redisException){
             log.error(redisException.getMessage());
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Redis 서버 에러");

@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.Optional;
 
+@Component
 public class CookieUtils {
 
 
