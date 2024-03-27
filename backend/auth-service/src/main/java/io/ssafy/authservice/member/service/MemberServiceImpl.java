@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -111,16 +112,16 @@ public class MemberServiceImpl implements MemberService {
 
     }
 
+
     @Transactional
     @Override
     public Response<?> loginMember(MemberLoginReqDto memberLoginReqDto, HttpServletResponse response) {
 
         Member member = memberRepository
                 .findByEmailAndAuthProviderAndIsDeleted(memberLoginReqDto.getEmail(), null, false).orElse(null);
-        boolean flag = false;
-        if (member != null && passwordEncoder.matches(memberLoginReqDto.getPassword(), member.getPassword())) {
-            flag = true;
-        }
+
+
+        boolean flag = member != null && passwordEncoder.matches(memberLoginReqDto.getPassword(), member.getPassword());
 
         if (flag) {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(member.getId(),
@@ -132,7 +133,8 @@ public class MemberServiceImpl implements MemberService {
             saveCookie(response, tokenInfo.getAccessToken());
 
             // redis에 토큰 저장
-            tokenRedisRepository.save(new TokenRedis(authentication.getName(), tokenInfo.getAccessToken(), tokenInfo.getRefreshToken()));
+            tokenRedisRepository.save(new TokenRedis(authentication.getName(),tokenInfo.getAccessToken(), tokenInfo.getRefreshToken()));
+
 
             return OK(null);
         } else {
@@ -165,7 +167,8 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    private void saveCookie(HttpServletResponse response, String AccessToken) {
+    @Transactional
+    protected void saveCookie(HttpServletResponse response, String AccessToken) {
         Cookie cookie = new Cookie("accessToken", AccessToken);
         cookie.setPath("/");
         cookie.setDomain(cookieResponseDomain); // 특정 도메인에서 사용하도록

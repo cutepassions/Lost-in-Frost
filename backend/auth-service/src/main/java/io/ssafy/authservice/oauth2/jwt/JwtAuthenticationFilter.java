@@ -25,8 +25,6 @@ import java.util.Optional;
 public class JwtAuthenticationFilter extends GenericFilterBean {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final CustomUserDetailsService customUserDetailsService;
-
 
 
     @Override
@@ -36,15 +34,13 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         // 쿠키에서 토큰 추출
         Optional<Cookie> accessToken = CookieUtils.getCookie((HttpServletRequest) servletRequest,"accessToken" );
         if (accessToken.isPresent()) {
-            boolean validToken = jwtTokenProvider.validateToken(String.valueOf(accessToken.get().getValue()), (HttpServletResponse) servletResponse);
+            String validToken = jwtTokenProvider.validateToken(String.valueOf(accessToken.get().getValue()), (HttpServletResponse) servletResponse);
             UsernamePasswordAuthenticationToken authentication;
-            if (validToken) {
-                // authentication 생성
-                authentication = jwtTokenProvider.createAuthenticationFromToken(accessToken.get().getValue(), null);
-                // security 추가
-            } else {
-                // 토큰이 만료되었을 경우
-                // 새로운 토큰 발급
+            if (validToken != null) {
+                authentication = jwtTokenProvider.createAuthenticationFromToken(accessToken.get().getValue(), validToken);
+            }
+            // 토큰이 만료되었을 경우 -> 새로운 토큰 발급
+            else {
                 authentication = jwtTokenProvider.replaceAccessToken((HttpServletResponse) servletResponse, accessToken.get().getValue());
             }
             SecurityContextHolder.getContext().setAuthentication(authentication);
