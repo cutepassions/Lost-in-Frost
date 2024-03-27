@@ -1,16 +1,12 @@
 package io.ssafy.authservice.global.config.security;
 
+import io.ssafy.authservice.member.respository.TokenRedisRepository;
 import io.ssafy.authservice.oauth2.cookie.CookieAuthorizationRequestRepository;
-import io.ssafy.authservice.oauth2.enums.Role;
 import io.ssafy.authservice.oauth2.handler.OAuth2AuthenticationFailureHandler;
 import io.ssafy.authservice.oauth2.handler.OAuth2AuthenticationSuccessHandler;
-import io.ssafy.authservice.oauth2.jwt.JwtAuthenticationFilter;
 import io.ssafy.authservice.oauth2.jwt.JwtTokenProvider;
+import io.ssafy.authservice.oauth2.jwt.OncePerRequestFilter;
 import io.ssafy.authservice.oauth2.service.CustomOAuth2UserService;
-import io.ssafy.authservice.oauth2.service.CustomUserDetailsService;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,21 +17,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -50,7 +38,7 @@ public class WebSecurityConfigure {
         private final CookieAuthorizationRequestRepository cookieAuthorizationRequestRepository;
         private final OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
         private final OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
-        private final CustomUserDetailsService customUserDetailsService;
+        private final TokenRedisRepository tokenRedisRepository;
 
         @Value("${url.frontend}")
         private String FRONTEND_BASE_URL;
@@ -94,14 +82,6 @@ public class WebSecurityConfigure {
                         .permitAll()
                         .anyRequest().denyAll());
 
-                http.authorizeHttpRequests(auth -> auth
-                                .anyRequest().permitAll()
-                        );
-
-                http.exceptionHandling(exception -> exception
-                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
-                        .defaultAuthenticationEntryPointFor(new CustomAuthenticationEntryPoint(), new AntPathRequestMatcher("/error"))
-                );
 
                 // oauth2Login
                 http.oauth2Login(oauth2 -> oauth2
@@ -119,7 +99,7 @@ public class WebSecurityConfigure {
                                 .sendRedirect(FRONTEND_BASE_URL)));
 
                 // jwt filter 설정
-                http.addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
+                http.addFilterBefore(new OncePerRequestFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
                 return http.build();
         }
