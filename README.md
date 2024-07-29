@@ -1,5 +1,5 @@
 <div align="center">
-1
+
 # ❄ Lost in Frost ❄
 
 <img src="WEB_IMG/메인.gif" width="1000" height="600" />
