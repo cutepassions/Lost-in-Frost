@@ -3,6 +3,7 @@ package io.ssafy.userservice.user.member.entity;
 import io.ssafy.userservice.oauth2.enums.AuthProvider;
 import io.ssafy.userservice.oauth2.enums.Role;
 import io.ssafy.userservice.oauth2.userinfo.OAuth2UserInfo;
+import io.ssafy.userservice.user.member.enums.RankingChange;
 import io.ssafy.userservice.user.mycostume.entity.MyCostume;
 import jakarta.persistence.*;
 import jakarta.persistence.Index;
@@ -26,7 +27,9 @@ import java.util.*;
         @Index(name = "idx_member_email", columnList = "member_email"),
         @Index(name = "idx_member_nickname", columnList = "member_nickname"),
         @Index(name = "idx_member_role", columnList = "member_role"),
-        @Index(name = "idx_member_is_deleted", columnList = "member_is_deleted")
+        @Index(name = "idx_member_is_deleted", columnList = "member_is_deleted"),
+        @Index(name = "idx_member_level", columnList = "member_level"),
+        @Index(name = "idx_member_experience", columnList = "member_experience")
 })
 public class Member implements UserDetails {
 
@@ -139,8 +142,8 @@ public class Member implements UserDetails {
 
     @Column(name = "member_ranking_change")
     @Comment("회원 랭킹 변동")
-    @ColumnDefault(value = "'NEW'")
-    private String rankingChange;
+    @Enumerated(EnumType.STRING)
+    private RankingChange rankingChange;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -214,7 +217,7 @@ public class Member implements UserDetails {
         this.isDeleted = true;
     }
 
-    public void updateRank(int rank, Timestamp rankUpdateDateTIme, String rankingChange) {
+    public void updateRank(int rank, Timestamp rankUpdateDateTIme, RankingChange rankingChange) {
         this.rank = rank;
         this.rankUpdateDateTIme = rankUpdateDateTIme;
         this.rankingChange = rankingChange;
