@@ -62,7 +62,7 @@
 
 ### ⚙ 아키텍처
 
-<img src="WEB_IMG/프로젝트_아키텍처.drawio (1).png" style="max-hight=500px;" />
+<img src="WEB_IMG/프로젝트_아키텍처.drawio (1).png" style="max-width=300px;" />
 
 ### 💶 ERD
 
