@@ -2,7 +2,7 @@
 
 # ❄ Lost in Frost ❄
 
-<img src="WEB_IMG/메인.gif" width="1000" height="600" />
+<img src="WEB_IMG/메인.gif" width="600" height="400"/>
 
 </div>
 
@@ -117,3 +117,17 @@
 | <img src="WEB_IMG/마이페이지.gif" alt="마이페이지"  width="800" height="600"/> |
 
 </div>
+
+
+### 아쉬웠던 점
+빠른 시간내에 비교적 적은 인원으로 프로젝트를 진행해야 하다 보니, 놓쳤던 부분들도 많았고, 사소한 부분들을 크게 신경쓰지 못했습니다.
+
+추후에 시간을 따로 가져, 개인적으로 프로젝트를 리뷰하며 개선이 필요한 점들을 개선해 나갈 예정입니다.
+
+### 개선 사항
+
+#### 사용자 인증 구조 개선
+
+- 관련 링크
+  - 이슈 : [✔ FEATURE: Redis를 활용한 refresh token 관리 #7](https://github.com/cutepassions/Lost-in-Frost/issues/7)
+  - 포스팅 : [Redis와 쿠키를 활용한 JWT 관리](https://velog.io/@cutepassions/series/Redis%EC%99%80-%EC%BF%A0%ED%82%A4%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-JWT-%EA%B4%80%EB%A6%AC)
